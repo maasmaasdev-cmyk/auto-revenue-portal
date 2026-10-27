@@ -4,7 +4,7 @@ on:
   schedule:
     # 毎日 21:00 UTC (日本時間 翌朝 06:00 JST) に完全自動実行
     - cron: '0 21 * * *'
-  workflow_dispatch: # 手動ワンクリック実行も可能
+  workflow_dispatch: # 手動実行も可能
   push:
     branches:
       - main
@@ -24,7 +24,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Automated Portal Generator
+      - name: Run Automated Portal Generator & Bluesky Auto-Poster
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
         run: python3 engine/build_portal.py
 
       - name: Commit and Push Updated Portal to GitHub Pages (docs/)
