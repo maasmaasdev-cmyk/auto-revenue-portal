@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Zero-Cost Automated Revenue Portal Generator (v2.0: Multi-Page Programmatic SEO Engine)
-トップページに加え、全アイテムごとの個別詳細ページ (docs/items/{id}.html) を自動生成。
-個別のJSON-LD (Product / Review) と sitemap.xml への全URL自動登録、Bluesky自動投稿まで完結。
+TechSpec & ROI Lab - Next-Gen Modern Designer Edition (v3.0)
+AIっぽさ（安直なカードの羅列・青白ベースの無機質な構成）を徹底排除し、
+トップクラスのWebデザインスタジオが手掛けたようなタイポグラフィ、グラデーションメッシュ、
+カテゴリーフィルタータブ、マイクロインタラクション、グラスモフィズムUIを完全自動生成。
 """
 import html
 import json
@@ -19,11 +20,9 @@ TODAY_STR = NOW.strftime("%Y-%m-%d")
 TODAY_JP = NOW.strftime("%Y年%m月%d日")
 
 def post_to_bluesky(handle, app_password, text, target_url):
-    """Bluesky API (AT Protocol) への完全無料自動ポスト"""
+    """Bluesky API への完全無料自動ポスト"""
     if not handle or not app_password:
-        print("[INFO] Bluesky credentials not found. Skipping auto-post.")
         return
-
     try:
         auth_url = "https://bsky.social/xrpc/com.atproto.server.createSession"
         auth_data = json.dumps({"identifier": handle, "password": app_password}).encode("utf-8")
@@ -34,7 +33,7 @@ def post_to_bluesky(handle, app_password, text, target_url):
             did = auth_res["did"]
 
         post_url = "https://bsky.social/xrpc/com.atproto.repo.createRecord"
-        post_text = f"{text}\n\n▼詳細スペック＆時給換算シミュレーターはこちら👇\n{target_url}"
+        post_text = f"{text}\n\n▼詳細スペック＆投資回収シミュレーターはこちら👇\n{target_url}"
         
         start_idx = post_text.encode("utf-8").find(target_url.encode("utf-8"))
         facets = []
@@ -70,7 +69,7 @@ def fetch_tech_trends():
     trends = []
     rss_url = "https://zenn.dev/feed"
     try:
-        req = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0 (AutoPortalBot/1.0)"})
+        req = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0 (AutoPortalBot/2.0)"})
         with urllib.request.urlopen(req, timeout=5) as resp:
             root = ET.fromstring(resp.read())
             for item in root.findall(".//item")[:4]:
@@ -80,8 +79,9 @@ def fetch_tech_trends():
                     trends.append({"title": title, "link": link})
     except Exception:
         trends = [
-            {"title": "デスク環境のエルゴノミクス投資と生産性ROIの相関分析", "link": "#simulator"},
-            {"title": "USB-C単一ケーブル化によるワークスペース構築ベストプラクティス", "link": "#ranking"}
+            {"title": "エルゴノミクスデスク投資がもたらす認知疲労軽減と年間生産性相関", "link": "#simulator"},
+            {"title": "Thunderbolt 4 / USB4 単一ドック環境における作業中断ロスの最小化", "link": "#ranking"},
+            {"title": "静電容量無接点方式キーボードの打鍵負荷分散と腱鞘炎予防エビデンス", "link": "#ranking"}
         ]
     return trends
 
@@ -116,13 +116,13 @@ def build_affiliate_urls(keyword, mon_cfg):
     return amz_url, rak_url
 
 def render_item_page(item, meta, mon):
-    """個別商品専用のロングテールSEO特化詳細ページ HTML を生成"""
+    """個別商品専用の洗練されたスタジオデザイン詳細ページ"""
     item_url = f"{meta['base_url']}/items/{item['id']}.html"
-    page_title = f"{item['name']}の費用対効果（ROI）＆実質コスト徹底解析 【{TODAY_JP}更新】"
-    page_desc = f"{item['name']}の1日あたり実質負担（約{item['daily_cost']}円/日）と想定時短効果（+{item['time_saved_min_per_day']}分/日）を徹底検証。あなたの想定時給に連動した投資回収シミュレーションと最新最安値をリアルタイム比較。"
+    page_title = f"{item['name']} | 費用対効果（ROI）実質コスト徹底解析レポート"
+    page_desc = f"{item['name']}の1日あたり実質負担（約{item['daily_cost']}円/日）と時短メリット（+{item['time_saved_min_per_day']}分/日）を数学的に検証。時給連動シミュレーションと最安値比較。"
     
     specs_rows = "".join([
-        f'<tr class="border-b border-slate-100"><th class="py-3 px-4 text-left font-semibold text-slate-700 bg-slate-50 w-1/3 text-xs md:text-sm">{k}</th><td class="py-3 px-4 text-slate-800 text-xs md:text-sm">{v}</td></tr>'
+        f'<tr class="border-b border-zinc-100 hover:bg-zinc-50/80 transition-colors"><th class="py-3.5 px-5 text-left font-semibold text-zinc-500 w-1/3 text-xs tracking-wider uppercase">{k}</th><td class="py-3.5 px-5 text-zinc-900 font-medium text-sm">{v}</td></tr>'
         for k, v in item["specs"].items()
     ])
 
@@ -151,123 +151,188 @@ def render_item_page(item, meta, mon):
                 "name": meta.get("author", "TechSpec Automated Analyst")
             },
             "datePublished": TODAY_STR,
-            "reviewBody": f"想定耐用期間{item['lifespan_months']}ヶ月で1日あたり実質約{item['daily_cost']}円。1日あたり{item['time_saved_min_per_day']}分の時短効果が見込め、総合ROIスコアは{item['score']}点と算出。"
+            "reviewBody": f"想定耐用期間{item['lifespan_months']}ヶ月で日割り実質約{item['daily_cost']}円。1日あたり{item['time_saved_min_per_day']}分の時短効果が見込め、総合ROIスコアは{item['score']}点。"
         }
     }
 
     return f"""<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
     <meta name="description" content="{page_desc}">
     <link rel="canonical" href="{item_url}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {{
+            theme: {{
+                extend: {{
+                    fontFamily: {{
+                        sans: ['"Plus Jakarta Sans"', '"Noto Sans JP"', 'sans-serif'],
+                    }},
+                    colors: {{
+                        brand: {{
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        }}
+                    }}
+                }}
+            }}
+        }}
+    </script>
     <script type="application/ld+json">{json.dumps(json_ld_product, ensure_ascii=False)}</script>
+    <style>
+        .glass-card {{
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }}
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <header class="bg-slate-900 text-white py-6 px-4 border-b border-slate-800">
-        <div class="max-w-3xl mx-auto flex items-center justify-between">
-            <a href="{meta['base_url']}/" class="text-sm font-bold text-slate-300 hover:text-white transition flex items-center gap-1.5">
-                ← 総合ランキングTOPへ戻る
-            </a>
-            <span class="text-xs text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-full">
-                ⚡ {TODAY_JP} 自動解析済
-            </span>
-        </div>
-    </header>
+<body class="bg-zinc-950 text-zinc-800 antialiased font-sans selection:bg-brand-500 selection:text-white">
+    <!-- 背景アンビエントグラデーション -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-[30%] left-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-violet-600/15 to-indigo-600/10 blur-3xl"></div>
+        <div class="absolute top-[40%] -right-[20%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-emerald-600/10 to-teal-600/10 blur-3xl"></div>
+    </div>
 
-    <main class="max-w-3xl mx-auto px-4 py-8">
-        <!-- パンくずナビゲーション -->
-        <nav class="text-xs text-slate-500 mb-4 flex items-center gap-2">
-            <a href="{meta['base_url']}/" class="hover:underline">ホーム</a>
-            <span>&gt;</span>
-            <span class="text-slate-700 font-medium">{item['category']}</span>
-            <span>&gt;</span>
-            <span class="text-slate-900 font-bold truncate">{item['name']}</span>
-        </nav>
-
-        <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-md">{item['category']}</span>
-                <div class="text-right">
-                    <span class="text-xs text-slate-500">総合ROI指数</span>
-                    <span class="text-2xl font-extrabold text-emerald-600 ml-1">{item['score']}</span>
-                    <span class="text-xs text-slate-400">/100</span>
-                </div>
-            </div>
-            
-            <h1 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-3">{item['name']}</h1>
-            <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6">{item['pros']}</p>
-
-            <!-- 核心指標サマリーパネル -->
-            <div class="grid grid-cols-3 gap-3 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 mb-6 text-center">
-                <div>
-                    <div class="text-xs text-slate-500">1日あたり実質負担</div>
-                    <div class="text-lg md:text-xl font-bold text-slate-900 mt-1">約{item['daily_cost']}円/日</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5">※耐用{item['lifespan_months']}ヶ月換算</div>
-                </div>
-                <div>
-                    <div class="text-xs text-slate-500">想定時短メリット</div>
-                    <div class="text-lg md:text-xl font-bold text-emerald-600 mt-1">+{item['time_saved_min_per_day']}分/日</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5">※作業効率化目安</div>
-                </div>
-                <div>
-                    <div class="text-xs text-slate-500">月間純利益換算</div>
-                    <div class="text-lg md:text-xl font-bold text-indigo-600 mt-1 dynamic-item-net">+¥{item['monthly_net_benefit']:,}/月</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5">※時給2,500円想定</div>
-                </div>
-            </div>
-
-            <!-- 動的時給シミュレーター -->
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-6">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs md:text-sm font-bold text-slate-700">あなたの想定時給で再計算:</span>
-                    <span class="text-sm font-extrabold text-indigo-600"><span id="itemWageDisp">2,500</span> 円/時</span>
-                </div>
-                <input id="itemWageRange" type="range" min="1200" max="10000" step="100" value="2500" class="w-full accent-indigo-600 cursor-pointer">
-            </div>
-
-            <!-- 購入ボタン -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                <a href="{item['amz_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition shadow-sm">
-                    Amazonで実売価格・口コミを見る ↗
+    <div class="relative z-10 min-h-screen flex flex-col justify-between">
+        <!-- ナビゲーションバー -->
+        <header class="border-b border-zinc-800/80 bg-zinc-950/70 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                <a href="{meta['base_url']}/" class="group flex items-center gap-2 text-zinc-400 hover:text-white transition text-xs sm:text-sm font-semibold">
+                    <span class="w-7 h-7 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center group-hover:border-brand-500/50 group-hover:bg-brand-500/10 transition">←</span>
+                    <span>総合ROIランキング一覧へ</span>
                 </a>
-                <a href="{item['rak_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition shadow-sm">
-                    楽天市場で還元ポイントをチェック ↗
+                <div class="flex items-center gap-2 text-[11px] font-mono tracking-wider text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-3 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>{TODAY_JP} VALIDATED</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 w-full">
+            <!-- パンくず -->
+            <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6 font-medium">
+                <a href="{meta['base_url']}/" class="hover:text-zinc-300 transition">INDEX</a>
+                <span class="text-zinc-700">/</span>
+                <span class="text-zinc-400">{item['category']}</span>
+                <span class="text-zinc-700">/</span>
+                <span class="text-brand-400 truncate max-w-[200px] sm:max-w-xs">{item['name']}</span>
+            </nav>
+
+            <article class="bg-white rounded-3xl border border-zinc-200/80 shadow-2xl p-6 sm:p-10 mb-8 relative overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 border border-brand-200/60 px-3.5 py-1 rounded-full">
+                        {item['category']}
+                    </span>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-xs font-semibold text-zinc-400">総合ROIスコア</span>
+                        <span class="text-3xl font-extrabold text-zinc-900 tracking-tight">{item['score']}</span>
+                        <span class="text-xs font-bold text-zinc-400">/100</span>
+                    </div>
+                </div>
+
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight leading-snug mb-4">
+                    {item['name']}
+                </h1>
+                <p class="text-zinc-600 text-sm sm:text-base leading-relaxed mb-8">
+                    {item['pros']}
+                </p>
+
+                <!-- メトリクスサマリーパネル -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-5 rounded-2xl bg-zinc-900 text-white mb-8 border border-zinc-800">
+                    <div class="p-3">
+                        <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-1">1日あたり実質負担</span>
+                        <div class="text-2xl font-bold tracking-tight text-white">約{item['daily_cost']}<span class="text-xs font-normal text-zinc-400 ml-1">円/日</span></div>
+                        <span class="text-[10px] text-zinc-500 mt-1 block">※想定耐用期間{item['lifespan_months']}ヶ月で按分</span>
+                    </div>
+                    <div class="p-3 border-t sm:border-t-0 sm:border-l border-zinc-800">
+                        <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-1">時短創出効果</span>
+                        <div class="text-2xl font-bold tracking-tight text-emerald-400">+{item['time_saved_min_per_day']}<span class="text-xs font-normal text-zinc-400 ml-1">分/日</span></div>
+                        <span class="text-[10px] text-zinc-500 mt-1 block">※集中持続・ロスタイム低減</span>
+                    </div>
+                    <div class="p-3 border-t sm:border-t-0 sm:border-l border-zinc-800">
+                        <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-1">月間時間価値換算</span>
+                        <div class="text-2xl font-bold tracking-tight text-violet-400 dynamic-item-net">+¥{item['monthly_net_benefit']:,}<span class="text-xs font-normal text-zinc-400 ml-1">/月</span></div>
+                        <span class="text-[10px] text-zinc-500 mt-1 block">※想定時給連動による純増益</span>
+                    </div>
+                </div>
+
+                <!-- インタラクティブ時給連動スライダー -->
+                <div class="bg-gradient-to-r from-violet-50 to-indigo-50 border border-violet-100/80 rounded-2xl p-5 mb-8">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-brand-600"></span>
+                            <span class="text-xs sm:text-sm font-bold text-zinc-800">あなたの想定時給で投資リターンをシミュレーション</span>
+                        </div>
+                        <span class="text-base font-extrabold text-brand-700 tracking-tight"><span id="itemWageDisp">2,500</span> <span class="text-xs font-medium text-zinc-500">円/時</span></span>
+                    </div>
+                    <input id="itemWageRange" type="range" min="1200" max="10000" step="100" value="2500" class="w-full accent-brand-600 cursor-pointer h-2 bg-white rounded-lg">
+                </div>
+
+                <!-- CTA（購入ボタングループ） -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-10">
+                    <a href="{item['amz_url']}" target="_blank" rel="nofollow sponsored noopener" class="group flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-4 px-6 rounded-2xl text-sm transition-all shadow-lg hover:shadow-xl active:scale-[0.98]">
+                        <span class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                            <span>Amazonで最新実売価格・口コミを見る</span>
+                        </span>
+                        <span class="text-zinc-400 group-hover:translate-x-0.5 transition-transform">↗</span>
+                    </a>
+                    <a href="{item['rak_url']}" target="_blank" rel="nofollow sponsored noopener" class="group flex items-center justify-between bg-white hover:bg-zinc-50 text-zinc-900 border border-zinc-200 font-semibold py-4 px-6 rounded-2xl text-sm transition-all shadow-sm hover:shadow-md active:scale-[0.98]">
+                        <span class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                            <span>楽天市場でポイント還元率を比較</span>
+                        </span>
+                        <span class="text-zinc-400 group-hover:translate-x-0.5 transition-transform">↗</span>
+                    </a>
+                </div>
+
+                <!-- 製品仕様テーブル -->
+                <div class="mb-10">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+                        <span>TECHNICAL SPECIFICATIONS</span>
+                    </h2>
+                    <div class="border border-zinc-200 rounded-2xl overflow-hidden shadow-sm">
+                        <table class="w-full">{specs_rows}</table>
+                    </div>
+                </div>
+
+                <!-- 客観的ROI分析ロジック -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">
+                        <span>QUANTITATIVE ROI ANALYSIS</span>
+                    </h2>
+                    <div class="bg-zinc-50 border border-zinc-200/80 rounded-2xl p-6 text-sm text-zinc-600 leading-relaxed space-y-3">
+                        <p><strong class="text-zinc-900 font-semibold">ターゲット推奨層：</strong> {item['target_user']}</p>
+                        <p><strong class="text-zinc-900 font-semibold">投資対効果の算出根拠：</strong> 市場想定価格 約{item['estimated_price']:,}円を耐用期間（{item['lifespan_months']}ヶ月 / 約{item['days']:,}日）で償却按分した場合、日割り実質負担額はわずか約{item['daily_cost']}円です。1日{item['time_saved_min_per_day']}分の短縮創出価値を時給換算すると、初期投資額に対して約{item['roi_multiple']}倍の経済的利益をもたらす計算となり、極めて高い合理性を持ちます。</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">{mon.get('a8_banner_html', '')}</div>
+            </article>
+
+            <div class="text-center pb-8">
+                <a href="{meta['base_url']}/" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white text-xs font-semibold uppercase tracking-wider transition bg-zinc-900 border border-zinc-800 px-6 py-3 rounded-full hover:border-zinc-700">
+                    <span>← RETURN TO ALL RANKINGS</span>
                 </a>
             </div>
+        </main>
 
-            <!-- スペック詳細テーブル -->
-            <h2 class="text-base font-bold text-slate-900 mb-3 border-l-4 border-indigo-600 pl-2">製品スペック・検証仕様</h2>
-            <table class="w-full text-left border border-slate-200 rounded-xl overflow-hidden mb-6">
-                <tbody>{specs_rows}</tbody>
-            </table>
-
-            <!-- レビュー評価解説 -->
-            <h2 class="text-base font-bold text-slate-900 mb-2 border-l-4 border-indigo-600 pl-2">客観的投資価値分析（ROI評価）</h2>
-            <div class="space-y-3 text-xs md:text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
-                <p>・<strong>推奨ターゲット：</strong> {item['target_user']}</p>
-                <p>・<strong>投資回収ロジック：</strong> 参考相場 {item['estimated_price']:,} 円を耐久年数（{item['lifespan_months']}ヶ月＝約{item['days']:,}日）で按分した場合、日割り費用は約 {item['daily_cost']} 円となります。1日あたり {item['time_saved_min_per_day']} 分の作業短縮・疲労軽減が実現できれば、投資対効果倍率は約 {item['roi_multiple']} 倍となり、極めて優れた機材投資と判定されます。</p>
-            </div>
-
-            <div class="text-center">{mon.get('a8_banner_html', '')}</div>
-        </article>
-
-        <div class="text-center">
-            <a href="{meta['base_url']}/" class="inline-block bg-slate-900 hover:bg-slate-800 text-white text-xs md:text-sm font-bold py-3 px-6 rounded-xl transition shadow">
-                ← 総合ROIランキング一覧へ戻る
-            </a>
-        </div>
-    </main>
-
-    <footer class="bg-slate-900 text-slate-400 text-xs py-8 px-4 mt-12 border-t border-slate-800">
-        <div class="max-w-3xl mx-auto text-center space-y-2">
-            <p>※当サイトはAmazonアソシエイトおよび楽天アフィリエイトプログラム等の適格販売により収入を得ています。</p>
-            <p>© {NOW.year} {meta['title']} - Multi-Page SEO Programmatic Engine.</p>
-        </div>
-    </footer>
+        <footer class="border-t border-zinc-900 bg-zinc-950 py-10 px-4 text-center text-xs text-zinc-500 space-y-2">
+            <p class="max-w-md mx-auto leading-relaxed">※当サイトはAmazonアソシエイトおよび楽天アフィリエイトプログラム等の適格販売により収入を得ています。</p>
+            <p class="font-mono text-[11px] text-zinc-600">© {NOW.year} {meta['title']} — Design Lab Edition.</p>
+        </footer>
+    </div>
 
     <script>
         const slider = document.getElementById('itemWageRange');
@@ -296,12 +361,14 @@ def main():
     items = cfg["items_database"]
 
     enriched_items = []
+    categories = set()
     for it in items:
         m = calculate_metrics(it)
         amz_url, rak_url = build_affiliate_urls(it["search_keyword"], mon)
         item_page_url = f"{meta['base_url']}/items/{it['id']}.html"
         enriched = {**it, **m, "amz_url": amz_url, "rak_url": rak_url, "item_page_url": item_page_url}
         enriched_items.append(enriched)
+        categories.add(it["category"])
 
     enriched_items.sort(key=lambda x: x["score"], reverse=True)
     trends = fetch_tech_trends()
@@ -310,7 +377,7 @@ def main():
     items_dir = os.path.join(docs_dir, "items")
     os.makedirs(items_dir, exist_ok=True)
 
-    # 1. 各アイテムの個別詳細 HTML ページを一括自動生成
+    # 1. 各アイテムの個別詳細 HTML ページを一括生成
     generated_pages = []
     for it in enriched_items:
         page_html = render_item_page(it, meta, mon)
@@ -319,61 +386,88 @@ def main():
             f.write(page_html)
         generated_pages.append(it['item_page_url'])
 
-    # 2. トップページ (index.html) のカード生成（各個別ページへの内部リンクを追加）
+    # 2. トップページ用：カテゴリー別フィルタータブボタンの生成
+    sorted_cats = sorted(list(categories))
+    cat_buttons = '<button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition bg-white text-zinc-900 shadow-sm border border-zinc-200" data-cat="all">ALL ITEMS</button>'
+    for c in sorted_cats:
+        cat_buttons += f'<button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800" data-cat="{c}">{c}</button>'
+
+    # 3. トップページ用：洗練されたアイテムカード一覧の生成
     cards_html = ""
     for idx, it in enumerate(enriched_items, 1):
         specs_badges = "".join([
-            f'<span class="inline-block bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-md mr-1.5 mb-1.5 font-medium">{k}: {v}</span>'
+            f'<span class="inline-block bg-zinc-100 text-zinc-600 text-[11px] px-2.5 py-1 rounded-md mr-1.5 mb-1.5 font-medium border border-zinc-200/50">{k}: {v}</span>'
             for k, v in it["specs"].items()
         ])
+        
+        rank_badge = (
+            '<span class="bg-gradient-to-r from-amber-400 to-amber-500 text-zinc-950 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm">TOP 1</span>' if idx == 1 else
+            '<span class="bg-gradient-to-r from-slate-300 to-slate-400 text-zinc-950 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm">TOP 2</span>' if idx == 2 else
+            '<span class="bg-gradient-to-r from-amber-700 to-amber-800 text-white text-xs font-extrabold px-3 py-1 rounded-full shadow-sm">TOP 3</span>' if idx == 3 else
+            f'<span class="bg-zinc-100 text-zinc-600 text-xs font-bold px-3 py-1 rounded-full border border-zinc-200">#{idx}</span>'
+        )
+
         cards_html += f"""
-        <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 transition hover:shadow-md" data-category="{it['category']}" data-min-saved="{it['time_saved_min_per_day']}" data-price="{it['estimated_price']}" data-days="{it['days']}">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <div class="flex items-center gap-2">
-                    <span class="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full">第{idx}位</span>
-                    <span class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md">{it['category']}</span>
+        <article class="item-card bg-white rounded-3xl border border-zinc-200/80 shadow-md hover:shadow-2xl transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between group" data-category="{it['category']}" data-min-saved="{it['time_saved_min_per_day']}" data-price="{it['estimated_price']}" data-days="{it['days']}">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-2">
+                        {rank_badge}
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 border border-brand-200/60 px-3 py-0.5 rounded-full">{it['category']}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] font-semibold text-zinc-400 block uppercase tracking-wider">ROI INDEX</span>
+                        <div class="flex items-baseline justify-end gap-1">
+                            <span class="text-2xl font-extrabold text-zinc-900">{it['score']}</span>
+                            <span class="text-[10px] text-zinc-400">/100</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-right">
-                    <span class="text-xs text-slate-500">総合ROIスコア</span>
-                    <span class="text-xl font-extrabold text-emerald-600 ml-1">{it['score']}</span><span class="text-xs text-slate-400">/100</span>
-                </div>
+
+                <h3 class="text-lg sm:text-xl font-extrabold text-zinc-900 tracking-tight mb-2.5 group-hover:text-brand-600 transition-colors">
+                    <a href="./items/{it['id']}.html">{it['name']}</a>
+                </h3>
+                <p class="text-xs sm:text-sm text-zinc-500 leading-relaxed mb-4">{it['pros']}</p>
+                <div class="mb-5">{specs_badges}</div>
             </div>
-            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">
-                <a href="./items/{it['id']}.html" class="hover:text-indigo-600 transition">{it['name']}</a>
-            </h3>
-            <p class="text-sm text-slate-600 mb-4">{it['pros']}</p>
-            <div class="mb-4">{specs_badges}</div>
-            <div class="grid grid-cols-3 gap-2 bg-slate-50 p-3.5 rounded-xl border border-slate-100 mb-5 text-center">
-                <div>
-                    <div class="text-xs text-slate-500">1日あたり実質負担</div>
-                    <div class="text-base font-bold text-slate-800">約{it['daily_cost']}円/日</div>
+
+            <div>
+                <div class="grid grid-cols-3 gap-2 bg-zinc-50 border border-zinc-100 rounded-2xl p-3.5 mb-5 text-center">
+                    <div>
+                        <div class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">1日実質</div>
+                        <div class="text-sm sm:text-base font-bold text-zinc-900 mt-0.5">約{it['daily_cost']}円</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">時短効果</div>
+                        <div class="text-sm sm:text-base font-bold text-emerald-600 mt-0.5">+{it['time_saved_min_per_day']}分</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">月間純増益</div>
+                        <div class="text-sm sm:text-base font-bold text-brand-600 dynamic-net-benefit mt-0.5">+¥{it['monthly_net_benefit']:,}</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="text-xs text-slate-500">時短換算メリット</div>
-                    <div class="text-base font-bold text-emerald-600">+{it['time_saved_min_per_day']}分/日</div>
+
+                <div class="flex items-center justify-between text-xs text-zinc-400 mb-4 pb-2 border-b border-zinc-100">
+                    <span class="truncate max-w-[200px]">🎯 推奨: {it['target_user']}</span>
+                    <a href="./items/{it['id']}.html" class="text-zinc-900 font-bold hover:text-brand-600 transition flex items-center gap-1 shrink-0 ml-2">
+                        詳細検証 <span>→</span>
+                    </a>
                 </div>
-                <div>
-                    <div class="text-xs text-slate-500">あなたの月間純利益換算</div>
-                    <div class="text-base font-bold text-indigo-600 dynamic-net-benefit">+¥{it['monthly_net_benefit']:,}/月</div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="{it['amz_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-3 px-3 rounded-xl text-xs transition active:scale-[0.98]">
+                        Amazon ↗
+                    </a>
+                    <a href="{it['rak_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-white hover:bg-zinc-50 text-zinc-800 border border-zinc-200 font-semibold py-3 px-3 rounded-xl text-xs transition active:scale-[0.98]">
+                        楽天市場 ↗
+                    </a>
                 </div>
-            </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 mb-4">
-                <span>🎯 <strong>推奨対象:</strong> {it['target_user']}</span>
-                <a href="./items/{it['id']}.html" class="text-indigo-600 font-bold hover:underline whitespace-nowrap ml-2">詳細スペック・徹底検証 ➔</a>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a href="{it['amz_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-sm">
-                    Amazonで最新価格・在庫を見る ↗
-                </a>
-                <a href="{it['rak_url']}" target="_blank" rel="nofollow sponsored noopener" class="flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-sm">
-                    楽天市場でポイント還元を比較 ↗
-                </a>
             </div>
         </article>
         """
 
     trends_html = "".join([
-        f'<li class="py-2 border-b border-slate-100 last:border-0 text-sm"><a href="{t["link"]}" target="_blank" rel="noopener" class="text-indigo-600 hover:underline font-medium">{t["title"]}</a></li>'
+        f'<li class="py-3 border-b border-zinc-800/80 last:border-0 flex items-baseline gap-3"><span class="text-xs text-brand-400 font-mono">TREND</span><a href="{t["link"]}" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white transition text-xs sm:text-sm font-medium leading-relaxed">{t["title"]}</a></li>'
         for t in trends
     ])
 
@@ -395,69 +489,131 @@ def main():
     }
 
     html_content = f"""<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{meta['title']} 【{TODAY_JP}自動更新】</title>
     <meta name="description" content="{meta['description']}">
     <link rel="canonical" href="{meta['base_url']}/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {{
+            theme: {{
+                extend: {{
+                    fontFamily: {{
+                        sans: ['"Plus Jakarta Sans"', '"Noto Sans JP"', 'sans-serif'],
+                    }},
+                    colors: {{
+                        brand: {{
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        }}
+                    }}
+                }}
+            }}
+        }}
+    </script>
     <script type="application/ld+json">{json.dumps(top_json_ld, ensure_ascii=False)}</script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <header class="bg-slate-900 text-white py-10 px-4 border-b border-slate-800">
-        <div class="max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full mb-3 border border-emerald-500/30">
-                <span>⚡ GitHub Actions 自動解析エンジン稼働中</span>
-                <span>全{len(enriched_items)}商品・{TODAY_JP} 更新</span>
-            </div>
-            <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3">{meta['title']}</h1>
-            <p class="text-slate-300 text-sm md:text-base">{meta['description']}</p>
-        </div>
-    </header>
+<body class="bg-zinc-950 text-zinc-800 antialiased font-sans selection:bg-brand-500 selection:text-white">
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-[20%] left-[10%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-violet-600/15 via-indigo-600/10 to-transparent blur-3xl"></div>
+        <div class="absolute top-[40%] -right-[15%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-emerald-600/10 via-teal-600/5 to-transparent blur-3xl"></div>
+    </div>
 
-    <main class="max-w-4xl mx-auto px-4 py-8">
-        <section id="simulator" class="bg-white rounded-2xl shadow-sm border border-indigo-100 p-6 mb-8">
-            <h2 class="text-lg font-bold text-slate-900 mb-2">🧮 あなたの時給換算・投資回収（ROI）リアルタイム計算機</h2>
-            <p class="text-xs text-slate-500 mb-4">スライダーを動かすと、全機材が「あなたに毎月いくらの時間価値（純利益）をもたらすか」を一括再計算します。</p>
-            <div class="flex flex-col sm:flex-row items-center gap-4 bg-indigo-50/60 p-4 rounded-xl">
-                <label for="wageSlider" class="text-sm font-bold text-slate-700 whitespace-nowrap">あなたの想定時給: <span id="wageDisplay" class="text-indigo-600 text-lg">2,500</span> 円/時</label>
-                <input id="wageSlider" type="range" min="1200" max="10000" step="100" value="2500" class="w-full accent-indigo-600 cursor-pointer">
+    <div class="relative z-10 min-h-screen flex flex-col justify-between">
+        <header class="border-b border-zinc-800/80 bg-zinc-950/70 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-extrabold text-sm shadow-lg shadow-brand-500/20">⚡</span>
+                    <span class="text-white font-extrabold tracking-tight text-sm sm:text-base">TechSpec & ROI Lab</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] font-mono tracking-wider text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-3 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>DAILY UPDATED: {TODAY_JP}</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 pb-12 text-center text-white">
+            <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs px-3.5 py-1.5 rounded-full mb-6 font-medium">
+                <span>🔬 デスク環境投資の費用対効果を数学的に解析</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+                作業の疲労と時間を削る、<br class="hidden sm:block">
+                <span class="bg-gradient-to-r from-violet-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">真のハイエンド機材ROI指数。</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-zinc-400 text-sm sm:text-base leading-relaxed mb-10">
+                日割り実質コスト、時短創出価値、あなたの想定時給を掛け合わせ、<br class="hidden sm:block">
+                「自己投資として毎月いくらのリターンがあるか」を毎日リアルタイム自動集計。
+            </p>
+
+            <div id="simulator" class="max-w-2xl mx-auto bg-zinc-900/90 border border-zinc-800/90 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl text-left">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-400 block mb-1">INTERACTIVE CALCULATOR</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white">あなたの想定時給を設定</h2>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-2xl font-extrabold text-white tracking-tight"><span id="wageDisplay">2,500</span></span>
+                        <span class="text-xs font-medium text-zinc-400 ml-1">円/時</span>
+                    </div>
+                </div>
+                <input id="wageSlider" type="range" min="1200" max="10000" step="100" value="2500" class="w-full accent-brand-500 cursor-pointer h-2 bg-zinc-800 rounded-lg">
+                <div class="flex justify-between text-[10px] font-mono text-zinc-500 mt-2">
+                    <span>¥1,200/h (ENTRY)</span>
+                    <span>¥5,000/h (EXPERT)</span>
+                    <span>¥10,000/h (LEAD)</span>
+                </div>
             </div>
         </section>
 
-        <section id="ranking">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-extrabold text-slate-900">🏆 本日の費用対効果（ROI）総合ランキング (全{len(enriched_items)}商品)</h2>
-                <span class="text-xs text-slate-500">※毎日AM6:00自動再集計</span>
+        <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-16 w-full">
+            <div class="mb-8">
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                    {cat_buttons}
+                </div>
             </div>
-            {cards_html}
-        </section>
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mt-8">
-            <h2 class="text-base font-bold text-slate-900 mb-3">📡 本日のテック・生産性トレンドヘッドライン（自動取得）</h2>
-            <ul>{trends_html}</ul>
-        </section>
+            <section id="ranking" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {cards_html}
+            </section>
 
-        <div class="mt-6 text-center">{mon.get('a8_banner_html', '')}</div>
-    </main>
+            <section class="mt-12 bg-zinc-900/60 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-zinc-400">TRENDING TECH TOPICS</h2>
+                    <span class="text-xs text-zinc-600 font-mono">AUTOMATED FEED</span>
+                </div>
+                <ul class="divide-y divide-zinc-800/60">{trends_html}</ul>
+            </section>
 
-    <footer class="bg-slate-900 text-slate-400 text-xs py-8 px-4 mt-12">
-        <div class="max-w-4xl mx-auto text-center space-y-2">
-            <p>※当サイトはAmazonアソシエイトおよび楽天アフィリエイトプログラム等の適格販売により収入を得ています。</p>
-            <p>© {NOW.year} {meta['title']} - Powered by Multi-Page Programmatic SEO Engine.</p>
-        </div>
-    </footer>
+            <div class="mt-8 text-center">{mon.get('a8_banner_html', '')}</div>
+        </main>
+
+        <footer class="border-t border-zinc-900 bg-zinc-950 py-12 px-4 text-center text-xs text-zinc-500 space-y-3">
+            <p class="max-w-md mx-auto leading-relaxed">※当サイトはAmazonアソシエイトおよび楽天アフィリエイトプログラム等の適格販売により収入を得ています。</p>
+            <p class="font-mono text-[11px] text-zinc-600">© {NOW.year} {meta['title']} — Powered by Next-Gen Programmatic SEO Engine.</p>
+        </footer>
+    </div>
 
     <script>
         const slider = document.getElementById('wageSlider');
         const display = document.getElementById('wageDisplay');
-        const articles = document.querySelectorAll('article[data-min-saved]');
+        const cards = document.querySelectorAll('.item-card');
+        const filterBtns = document.querySelectorAll('.cat-filter-btn');
+
         slider.addEventListener('input', (e) => {{
             const wage = parseInt(e.target.value, 10);
             display.textContent = wage.toLocaleString();
-            articles.forEach(card => {{
+            cards.forEach(card => {{
                 const minSaved = parseFloat(card.dataset.minSaved);
                 const price = parseFloat(card.dataset.price);
                 const days = parseFloat(card.dataset.days);
@@ -466,8 +622,28 @@ def main():
                 const monthlyNet = Math.round((dailyVal - dailyCost) * 30);
                 const targetEl = card.querySelector('.dynamic-net-benefit');
                 if (targetEl) {{
-                    targetEl.textContent = (monthlyNet >= 0 ? '+¥' : '-¥') + Math.abs(monthlyNet).toLocaleString() + '/月';
+                    targetEl.textContent = (monthlyNet >= 0 ? '+¥' : '-¥') + Math.abs(monthlyNet).toLocaleString();
                 }}
+            }});
+        }});
+
+        filterBtns.forEach(btn => {{
+            btn.addEventListener('click', () => {{
+                filterBtns.forEach(b => {{
+                    b.classList.remove('bg-white', 'text-zinc-900', 'shadow-sm');
+                    b.classList.add('bg-zinc-900/80', 'text-zinc-400');
+                }});
+                btn.classList.remove('bg-zinc-900/80', 'text-zinc-400');
+                btn.classList.add('bg-white', 'text-zinc-900', 'shadow-sm');
+
+                const selectedCat = btn.dataset.cat;
+                cards.forEach(card => {{
+                    if (selectedCat === 'all' || card.dataset.category === selectedCat) {{
+                        card.style.display = 'flex';
+                    }} else {{
+                        card.style.display = 'none';
+                    }}
+                }});
             }});
         }});
     </script>
@@ -477,7 +653,6 @@ def main():
     with open(os.path.join(docs_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    # 3. sitemap.xml の全自動生成（トップページ ＋ 個別15ページ = 全16URLを自動登録）
     sitemap_urls = f"""  <url>
     <loc>{meta['base_url']}/</loc>
     <lastmod>{TODAY_STR}</lastmod>
@@ -500,7 +675,6 @@ def main():
     with open(os.path.join(docs_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(sitemap_xml)
 
-    # 4. feed.xml の生成
     rss_title = html.escape(meta['title'])
     rss_desc = html.escape(meta['description'])
     rss_items = ""
@@ -528,7 +702,6 @@ def main():
     with open(os.path.join(docs_dir, "feed.xml"), "w", encoding="utf-8") as f:
         f.write(rss_xml)
 
-    # 5. Bluesky 自動投稿（最上位アイテムの個別ページURL付きでポスト）
     top_item = enriched_items[0]
     bsky_text = f"【本日自動解析】作業時短×コスパROI第1位は『{top_item['name']}』！1日わずか{top_item['daily_cost']}円で毎月{top_item['monthly_net_benefit']:,}円相当の時短効果。"
     post_to_bluesky(
@@ -538,7 +711,7 @@ def main():
         top_item['item_page_url']
     )
 
-    print(f"[SUCCESS] Multi-Page Engine: Generated index.html, {len(generated_pages)} item pages in docs/items/, sitemap.xml ({len(generated_pages)+1} URLs), and feed.xml")
+    print(f"[SUCCESS] Designer Edition: Generated modern UI index.html, {len(generated_pages)} item pages, sitemap.xml, and feed.xml")
 
 if __name__ == "__main__":
     main()
