@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Zero-Cost Automated Revenue Portal Generator
-外部有料APIを一切使わず、config.jsonと公開トレンドデータから
-高CVRのインタラクティブROIシミュレーター付き比較サイト・Sitemap・RSSを完全自動生成します。
+Zero-Cost Automated Revenue Portal Generator (XML規格修正版)
+IFTTT / RSSリーダーが100%エラーなく読み込めるよう特殊記号をエスケープ処理しています。
 """
+import html
 import json
 import os
 import urllib.parse
@@ -18,7 +18,6 @@ TODAY_STR = NOW.strftime("%Y-%m-%d")
 TODAY_JP = NOW.strftime("%Y年%m月%d日")
 
 def fetch_tech_trends():
-    """公開RSS（Zenn / HackerNews等）から本日の注目技術キーワードを安全に取得（オフライン時はフォールバック）"""
     trends = []
     rss_url = "https://zenn.dev/feed"
     try:
@@ -40,14 +39,12 @@ def fetch_tech_trends():
     return trends
 
 def calculate_metrics(item, hourly_wage=2500):
-    """日次コスパ指数・1日あたり実質コスト・年間時間創出価値を算出"""
     price = item["estimated_price"]
     days = item["lifespan_months"] * 30
     daily_cost = round(price / days, 1)
     daily_value_yen = round((item["time_saved_min_per_day"] / 60.0) * hourly_wage)
     monthly_net_benefit = (daily_value_yen - daily_cost) * 30
     roi_Multiple = round((daily_value_yen * days) / max(price, 1), 1)
-    # 日替わりで微細な注目度スコア変動を算出（クローラーに鮮度シグナルを送信）
     day_seed = (NOW.day * 7 + len(item["id"])) % 9
     score = min(99, round(78 + roi_Multiple * 1.2 + day_seed * 0.4, 1))
     return {
@@ -86,11 +83,9 @@ def main():
         enriched = {**it, **m, "amz_url": amz_url, "rak_url": rak_url}
         enriched_items.append(enriched)
 
-    # スコア順にソート
     enriched_items.sort(key=lambda x: x["score"], reverse=True)
     trends = fetch_tech_trends()
 
-    # JSON-LD 構造化データ生成 (リッチリザルト対応)
     json_ld = {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -182,7 +177,6 @@ def main():
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-8">
-        <!-- インタラクティブROIシミュレーター (SEO滞在時間最大化モジュール) -->
         <section id="simulator" class="bg-white rounded-2xl shadow-sm border border-indigo-100 p-6 mb-8">
             <h2 class="text-lg font-bold text-slate-900 mb-2">🧮 あなたの時給換算・投資回収（ROI）リアルタイム計算機</h2>
             <p class="text-xs text-slate-500 mb-4">スライダーを動かすと、各機材が「あなたに毎月いくらの時間価値（純利益）をもたらすか」を自動再計算します。</p>
@@ -192,7 +186,6 @@ def main():
             </div>
         </section>
 
-        <!-- ランキング一覧 -->
         <section id="ranking">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-extrabold text-slate-900">🏆 本日の費用対効果（ROI）総合ランキング</h2>
@@ -201,7 +194,6 @@ def main():
             {cards_html}
         </section>
 
-        <!-- 自動取得トレンドモジュール -->
         <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mt-8">
             <h2 class="text-base font-bold text-slate-900 mb-3">📡 本日のテック・生産性トレンドヘッドライン（自動取得）</h2>
             <ul>{trends_html}</ul>
@@ -246,7 +238,6 @@ def main():
     with open(os.path.join(docs_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    # Sitemap.xml の自動生成
     sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -259,30 +250,35 @@ def main():
     with open(os.path.join(docs_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(sitemap_xml)
 
-    # RSS feed.xml の自動生成 (SNS自動投稿連携用)
+    # IFTTT準拠の厳格なXMLエスケープ処理
+    rss_title = html.escape(meta['title'])
+    rss_desc = html.escape(meta['description'])
     rss_items = ""
     for it in enriched_items[:3]:
+        it_title = html.escape(f"【ROIスコア {it['score']}点】{it['name']}（1日実質{it['daily_cost']}円）")
+        it_desc = html.escape(f"{it['pros']}（時短目安: +{it['time_saved_min_per_day']}分/日）")
         rss_items += f"""
     <item>
-      <title>【ROIスコア {it['score']}点】{it['name']}（1日実質{it['daily_cost']}円）</title>
+      <title>{it_title}</title>
       <link>{meta['base_url']}/#ranking</link>
-      <description>{it['pros']}（時短目安: +{it['time_saved_min_per_day']}分/日）</description>
+      <guid isPermaLink="false">{it['id']}-{TODAY_STR}</guid>
+      <description>{it_desc}</description>
       <pubDate>{NOW.strftime('%a, %d %b %Y %H:%M:%S +0900')}</pubDate>
     </item>"""
 
     rss_xml = f"""<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
-    <title>{meta['title']}</title>
+    <title>{rss_title}</title>
     <link>{meta['base_url']}/</link>
-    <description>{meta['description']}</description>
+    <description>{rss_desc}</description>
     <lastBuildDate>{NOW.strftime('%a, %d %b %Y %H:%M:%S +0900')}</lastBuildDate>{rss_items}
   </channel>
 </rss>"""
     with open(os.path.join(docs_dir, "feed.xml"), "w", encoding="utf-8") as f:
         f.write(rss_xml)
 
-    print(f"[SUCCESS] Generated docs/index.html, docs/sitemap.xml, docs/feed.xml ({TODAY_STR})")
+    print(f"[SUCCESS] Generated strictly compliant XML feed ({TODAY_STR})")
 
 if __name__ == "__main__":
     main()
