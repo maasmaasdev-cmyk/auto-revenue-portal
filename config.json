@@ -6,91 +6,251 @@
     "author": "TechSpec Automated Analyst"
   },
   "monetization": {
-    "amazon_associate_tag": "j2001077maasm-22",
-    "rakuten_affiliate_id": "58dd353b.cd774201.58dd353c.b9b94eb3",
+    "amazon_associate_tag": "YOUR_AMAZON_TAG-22",
+    "rakuten_affiliate_id": "YOUR_RAKUTEN_ID",
     "a8_banner_html": "<!-- ここにA8.net等の自由テキスト広告タグを貼り付け可能 -->",
     "adsense_client_id": ""
   },
   "items_database": [
     {
-      "id": "ergo-mouse-trackball",
-      "category": "入力デバイス",
-      "name": "ハイエンド親指トラックボールマウス Pro",
-      "search_keyword": "ロジクール トラックボール MX ERGO S",
-      "estimated_price": 17800,
-      "lifespan_months": 48,
-      "time_saved_min_per_day": 15,
+      "id": "ergo-chair-high-end",
+      "category": "オフィスチェア",
+      "name": "高機能エルゴノミクス オフィスチェア（3Dランバーサポート・4Dアームレスト）",
+      "search_keyword": "エルゴヒューマン プロ 2 オットマン オカムラ シルフィー",
+      "estimated_price": 128000,
+      "lifespan_months": 96,
+      "time_saved_min_per_day": 35,
       "specs": {
-        "接続": "Bluetooth / Logi Bolt",
-        "傾斜角": "0° / 20°調整",
-        "充電": "USB-C急速"
+        "ランバー": "独立可動式3Dサポート",
+        "リクライニング": "最大135度チルト",
+        "素材": "高弾性オールエラストメリックメッシュ"
       },
-      "pros": "手首の回内筋負荷を約20%軽減し、マルチディスプレイ移動を高速化",
-      "target_user": "1日4時間以上PC作業を行うエンジニア・デスクワーカー"
+      "pros": "腰椎・頸椎の体圧分散で長時間の着座疲労を半減させ、午後の集中力低下を防止",
+      "target_user": "1日6時間以上デスクワークを行い、腰痛や背中の張りに悩む方"
+    },
+    {
+      "id": "standing-desk-dual-motor",
+      "category": "デスク・昇降環境",
+      "name": "デュアルモーター電動昇降デスク（静音・メモリ機能・障害物検知）",
+      "search_keyword": "FlexiSpot E7 E8 電動昇降デスク 天板セット",
+      "estimated_price": 62800,
+      "lifespan_months": 84,
+      "time_saved_min_per_day": 25,
+      "specs": {
+        "駆動": "デュアル静音モーター",
+        "耐荷重": "125kg",
+        "昇降範囲": "58cm〜123cm（高さ記憶4つ）"
+      },
+      "pros": "座りすぎによる血流低下と午後の眠気を撃退。立ち作業へのワンタッチ切替で代謝を維持",
+      "target_user": "座りっぱなしの生活習慣をリセットし、作業のメリハリをつけたい方"
     },
     {
       "id": "4k-usb-c-monitor-27",
       "category": "ディスプレイ",
-      "name": "27インチ 4K IPS USB-C給電モニター (90W PD対応)",
-      "search_keyword": "Dell 27インチ 4K モニター USB-C",
-      "estimated_price": 46800,
+      "name": "27インチ 4K IPS USB-C給電モニター（90W PD・超狭額ベゼル）",
+      "search_keyword": "Dell 27インチ 4K モニター U2723QE USB-C",
+      "estimated_price": 68800,
       "lifespan_months": 60,
-      "time_saved_min_per_day": 28,
+      "time_saved_min_per_day": 30,
       "specs": {
-        "解像度": "3840x2160 (4K)",
-        "給電": "USB-C 90W",
-        "パネル": "IPS非光沢"
+        "解像度": "3840x2160 (4K UHD)",
+        "給電": "USB-C 90W PD",
+        "パネル": "IPS Black / sRGB 100%"
       },
-      "pros": "ケーブル1本で映像出力とPC給電を統合、ウィンドウ切替ロスを劇的削減",
-      "target_user": "ノートPC単体で作業しており画面切り替え頻度が高い方"
+      "pros": "ケーブル1本でノートPCの映像出力と急速給電を完了。ウィンドウ切替時間を大幅削減",
+      "target_user": "画面の狭さや複数アプリの行き来による作業効率低下を感じている方"
+    },
+    {
+      "id": "monitor-arm-heavy-duty",
+      "category": "デスク・配置環境",
+      "name": "高耐久スプリング式 シングルモニターアーム（大型対応・3軸可動）",
+      "search_keyword": "エルゴトロン LX デスクマウント モニターアーム",
+      "estimated_price": 22800,
+      "lifespan_months": 120,
+      "time_saved_min_per_day": 15,
+      "specs": {
+        "耐荷重": "3.2kg〜11.3kg（最大34インチ）",
+        "可動": "チルト・パン・360度回転",
+        "保証": "10年メーカー保証"
+      },
+      "pros": "デスク上の専有面積をゼロにし、視線を目線の高さに固定してストレートネックを予防",
+      "target_user": "デスクを広く使いたい方や、純正モニタースタンドで手狭になっている方"
     },
     {
       "id": "Split-keyboard-mech",
       "category": "入力デバイス",
       "name": "静電容量無接点 / ロープロファイル高速キーボード",
-      "search_keyword": "REALFORCE RC1 HHKB Studio",
-      "estimated_price": 35800,
-      "lifespan_months": 72,
+      "search_keyword": "REALFORCE R3 R3S HHKB Professional HYBRID",
+      "estimated_price": 36800,
+      "lifespan_months": 84,
       "time_saved_min_per_day": 22,
       "specs": {
-        "スイッチ": "静電容量無接点 / 高耐久",
-        "重量": "超軽量コンパクト",
-        "接続": "マルチペアリング4台"
+        "スイッチ": "静電容量無接点（キー荷重45g/変荷重）",
+        "耐久性": "5000万回以上打鍵保証",
+        "接続": "Bluetooth 5.0 / USB Type-C"
       },
-      "pros": "タイピング疲労と誤입력を極小化し、長文作成・コーディング速度を向上",
-      "target_user": "タイピング量が1日5,000打鍵を超えるクリエイター・執筆者"
+      "pros": "底打ちの衝撃を吸収し指先の負担を最小化。長文執筆やプログラミングの入力速度を向上",
+      "target_user": "1日の打鍵数が多く、指や手首の疲労を軽減したいクリエイター・エンジニア"
+    },
+    {
+      "id": "ergo-mouse-trackball",
+      "category": "入力デバイス",
+      "name": "ハイエンド親指トラックボールマウス（傾斜角調整・高精度スクロール）",
+      "search_keyword": "ロジクール MX ERGO S ワイヤレストラックボール",
+      "estimated_price": 18800,
+      "lifespan_months": 48,
+      "time_saved_min_per_day": 15,
+      "specs": {
+        "角度": "0° / 20°傾斜調整",
+        "充電": "USB-C急速充電",
+        "接続": "Logi Bolt / Bluetooth"
+      },
+      "pros": "手首を一切動かさず親指のみでポインタ操作。腱鞘炎リスクを抑制し省スペース操作を実現",
+      "target_user": "手首の痛みがある方や、狭いデスク上でマウスパッドを置きたくない方"
+    },
+    {
+      "id": "noise-cancelling-headphone",
+      "category": "オーディオ・集中",
+      "name": "アクティブノイズキャンセリング ワイヤレスヘッドホン",
+      "search_keyword": "Sony WH-1000XM5 Bose QuietComfort Ultra",
+      "estimated_price": 49800,
+      "lifespan_months": 48,
+      "time_saved_min_per_day": 25,
+      "specs": {
+        "ノイズ低減": "マルチマイクNCエンジン",
+        "バッテリー": "連続再生30時間",
+        "通話": "高精度ボイスピックアップAIマイク"
+      },
+      "pros": "周囲の生活音・オフィス雑音を瞬時に遮断。深い集中状態（ディープワーク）へ突入",
+      "target_user": "周囲の話し声や生活音が気になり、作業に没頭できない方"
     },
     {
       "id": "gan-charger-100w",
       "category": "電源・モバイル",
       "name": "GaN (窒化ガリウム) 100W 3ポート超小型急速充電器",
-      "search_keyword": "Anker Prime Wall Charger 100W",
+      "search_keyword": "Anker Prime Wall Charger 100W 3ポート GaN",
       "estimated_price": 9990,
       "lifespan_months": 36,
       "time_saved_min_per_day": 10,
       "specs": {
-        "最大出力": "100W",
+        "出力": "最大100W（USB PD 3.0）",
         "ポート": "USB-C x2 + USB-A x1",
-        "素子": "次世代GaN"
+        "サイズ": "一般的な96W純正アダプタより45%小型化"
       },
-      "pros": "ノートPCとスマホのACアダプタを1個に集約し、外出時の荷物を300g軽量化",
-      "target_user": "外出先や複数部屋でPC・スマホを同時充電するハイブリッドワーカー"
+      "pros": "重い純正ACアダプタを持ち歩く必要がなくなり、外出準備と持ち運びのストレスを削減",
+      "target_user": "カフェや出張先でもノートPCとスマホを同時に超急速充電したい方"
     },
     {
       "id": "task-light-screenbar",
       "category": "デスク環境",
-      "name": "モニター掛け式 自動調光デスクライト (非対称光学設計)",
-      "search_keyword": "BenQ ScreenBar Pro モニターライト",
+      "name": "モニター掛け式 自動調光デスクライト（非対称光学設計）",
+      "search_keyword": "BenQ ScreenBar Pro モニター掛け式ライト",
       "estimated_price": 19800,
       "lifespan_months": 60,
       "time_saved_min_per_day": 12,
       "specs": {
-        "照度": "中央1000lux以上",
-        "センサー": "超音波自動点灯・自動調光",
-        "給電": "USB-C"
+        "配光": "非対称光学反射（画面反射ゼロ）",
+        "調光": "超音波自動点灯・環境光自動追従",
+        "給電": "USB-Cバスパワー"
       },
-      "pros": "画面への映り込みゼロで手元のみを照射し、夜間の眼精疲労を大幅に緩和",
-      "target_user": "夜間作業が多く、デスク上のスタンドライト設置スペースを節約したい方"
+      "pros": "ディスプレイへの映り込みを一切排除して手元だけを均一照射。夜間の眼精疲労を防止",
+      "target_user": "デスクに卓上スタンドを置く場所がなく、夜間作業が多い方"
+    },
+    {
+      "id": "external-nvme-ssd-2tb",
+      "category": "ストレージ・高速化",
+      "name": "USB4 / Thunderbolt対応 超高速外付けポータブルSSD 2TB",
+      "search_keyword": "SanDisk エクストリーム ポータブルSSD 2TB Samsung T9",
+      "estimated_price": 28800,
+      "lifespan_months": 60,
+      "time_saved_min_per_day": 18,
+      "specs": {
+        "転送速度": "最大2000MB/s超高速読み出し",
+        "耐久性": "IP65防塵防滴・耐衝撃2m落下",
+        "接続": "USB 3.2 Gen 2x2 Type-C"
+      },
+      "pros": "重い4K動画データや大容量プロジェクトのバックアップ・読み込み待ち時間を激減",
+      "target_user": "PCの内蔵ストレージ容量が逼迫している方やデータ移動に時間がかかる方"
+    },
+    {
+      "id": "stream-deck-macro-pad",
+      "category": "ショートカット・自動化",
+      "name": "LCDキー搭載 卓上ショートカットコントローラー（15キー）",
+      "search_keyword": "Elgato Stream Deck MK.2 15キー",
+      "estimated_price": 22980,
+      "lifespan_months": 60,
+      "time_saved_min_per_day": 20,
+      "specs": {
+        "キー": "15個のカスタム可能LCDキー",
+        "連携": "アプリ起動・定型文入力・OBS・マクロ",
+        "接続": "着脱式USB-Cケーブル"
+      },
+      "pros": "頻繁に行うURLオープン、定型文ペースト、Zoomミュートを1ボタン化し操作ラグをゼロに",
+      "target_user": "定型的なショートカット操作やアプリ切り替えの手間を減らしたい方"
+    },
+    {
+      "id": "desktop-speaker-dac",
+      "category": "オーディオ・Web会議",
+      "name": "ハイレゾ対応 高音質コンパクトアクティブスピーカー",
+      "search_keyword": "Audioengine A2+ Wireless エドファイア S880DB",
+      "estimated_price": 38500,
+      "lifespan_months": 84,
+      "time_saved_min_per_day": 10,
+      "specs": {
+        "アンプ": "内蔵アナログClass A/Bパワーアンプ",
+        "DAC": "高解像度USB DAC内蔵",
+        "接続": "USB / Bluetooth aptX / 3.5mm AUX"
+      },
+      "pros": "長時間イヤホン装着による耳の蒸れ・痛みを解放し、クリアな音声でWeb会議の聞き返しを低減",
+      "target_user": "イヤホンやヘッドホンの常用で耳が痛くなりやすいデスクワーカー"
+    },
+    {
+      "id": "usb-c-triple-docking-station",
+      "category": "拡張ハブ・ドッキング",
+      "name": "12-in-1 トリプルディスプレイ対応 USB-Cドッキングステーション",
+      "search_keyword": "Anker 563 USB-C ドッキングステーション 10-in-1",
+      "estimated_price": 29990,
+      "lifespan_months": 48,
+      "time_saved_min_per_day": 12,
+      "specs": {
+        "ポート": "HDMI x2 + DP x1 + LAN + USB-C 100W PD",
+        "画面出力": "最大3画面同時出力",
+        "給電": "本体100W給電"
+      },
+      "pros": "ノートPCの帰宅時・外出時のケーブル脱着が『たった1本』で完結。周辺機器の一括接続を実現",
+      "target_user": "複数のモニターや有線LAN、USB機器をノートPCに毎日挿し直している方"
+    },
+    {
+      "id": "desk-mat-leather-large",
+      "category": "デスクマット・保護",
+      "name": "大型ヴィーガンレザー デスクマット（耐水・防汚・マウスパッド兼用）",
+      "search_keyword": "Orbitkey Desk Mat ミヨシ レザー調 デスクマット 特大",
+      "estimated_price": 8800,
+      "lifespan_months": 48,
+      "time_saved_min_per_day": 8,
+      "specs": {
+        "サイズ": "900mm x 420mm 大型ワイド",
+        "素材": "高耐久プレミアムPUレザー",
+        "機能": "ツールオーガナイザー＆隠し書類ホルダー"
+      },
+      "pros": "手元の冷えを防止し、マウス操作エリアをデスク全面に拡張。散らかりやすい小物を整理整頓",
+      "target_user": "デスク天板の傷を防ぎつつ、手元の作業感を統一して集中力を高めたい方"
+    },
+    {
+      "id": "smart-humidifier-desktop",
+      "category": "環境管理・コンディショニング",
+      "name": "超音波＋加熱ハイブリッド式 スマート卓上加湿器（アロマ対応）",
+      "search_keyword": "SwitchBot 加湿器 ハイブリッド スマート家電",
+      "estimated_price": 8980,
+      "lifespan_months": 36,
+      "time_saved_min_per_day": 10,
+      "specs": {
+        "加湿方式": "超音波＋加熱ハイブリッド（除菌）",
+        "制御": "温湿度センサー連動・自動湿度キープ",
+        "給水": "上部給水式・3.5L大容量タンク"
+      },
+      "pros": "空調によるドライアイや喉の乾燥を防ぎ、長時間のPC画面凝視による眼精疲労と風邪を予防",
+      "target_user": "エアコンの風による目の乾きや肌の乾燥で作業効率が落ちている方"
     }
   ]
 }
