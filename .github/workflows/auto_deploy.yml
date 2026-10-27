@@ -1,0 +1,35 @@
+name: Daily Auto-Build & Deploy Revenue Portal
+
+on:
+  schedule:
+    # 毎日 21:00 UTC (日本時間 翌朝 06:00 JST) に完全自動実行
+    - cron: '0 21 * * *'
+  workflow_dispatch: # 手動ワンクリック実行も可能
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Automated Portal Generator
+        run: python3 engine/build_portal.py
+
+      - name: Commit and Push Updated Portal to GitHub Pages (docs/)
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(auto): daily ROI & trend update [skip ci]" && git push)
