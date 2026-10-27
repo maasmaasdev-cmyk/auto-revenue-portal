@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Zero-Cost Automated Revenue Portal Generator (XML規格修正版)
-IFTTT / RSSリーダーが100%エラーなく読み込めるよう特殊記号をエスケープ処理しています。
+Zero-Cost Automated Revenue Portal Generator with Direct Bluesky Auto-Poster
+外部有料API/サービスを一切使わず、GitHub ActionsからBlueskyへ直接自動投稿します。
 """
 import html
 import json
@@ -17,14 +17,64 @@ NOW = datetime.now(JST)
 TODAY_STR = NOW.strftime("%Y-%m-%d")
 TODAY_JP = NOW.strftime("%Y年%m月%d日")
 
+def post_to_bluesky(handle, app_password, text, target_url):
+    """Bluesky API (AT Protocol) を直接叩いて完全無料で自動ポスト"""
+    if not handle or not app_password:
+        print("[INFO] Bluesky credentials not found. Skipping auto-post.")
+        return
+
+    try:
+        # 1. セッション作成 (認証)
+        auth_url = "https://bsky.social/xrpc/com.atproto.server.createSession"
+        auth_data = json.dumps({"identifier": handle, "password": app_password}).encode("utf-8")
+        req = urllib.request.Request(auth_url, data=auth_data, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            auth_res = json.loads(resp.read().decode("utf-8"))
+            access_jwt = auth_res["accessJwt"]
+            did = auth_res["did"]
+
+        # 2. ポスト投稿
+        post_url = "https://bsky.social/xrpc/com.atproto.repo.createRecord"
+        post_text = f"{text}\n\n▼あなたの時給換算シミュレーターはこちら👇\n{target_url}"
+        
+        # リンクファセット (URLをクリック可能にする設定)
+        start_idx = post_text.encode("utf-8").find(target_url.encode("utf-8"))
+        facets = []
+        if start_idx != -1:
+            end_idx = start_idx + len(target_url.encode("utf-8"))
+            facets.append({
+                "index": {"byteStart": start_idx, "byteEnd": end_idx},
+                "features": [{"$type": "app.bsky.richtext.facet#link", "uri": target_url}]
+            })
+
+        post_body = {
+            "repo": did,
+            "collection": "app.bsky.feed.post",
+            "record": {
+                "$type": "app.bsky.feed.post",
+                "text": post_text,
+                "facets": facets,
+                "createdAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+            }
+        }
+        
+        post_req = urllib.request.Request(
+            post_url,
+            data=json.dumps(post_body).encode("utf-8"),
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {access_jwt}"}
+        )
+        with urllib.request.urlopen(post_req, timeout=10) as p_resp:
+            print("[SUCCESS] Posted top ROI item directly to Bluesky!")
+    except Exception as e:
+        print(f"[WARNING] Bluesky auto-post failed: {e}")
+
 def fetch_tech_trends():
     trends = []
     rss_url = "https://zenn.dev/feed"
     try:
         req = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0 (AutoPortalBot/1.0)"})
         with urllib.request.urlopen(req, timeout=5) as resp:
-            xml_data = resp.read()
-            root = ET.fromstring(xml_data)
+            root = ET.fromstring(resp.read())
             for item in root.findall(".//item")[:4]:
                 title = item.findtext("title", "")
                 link = item.findtext("link", "")
@@ -33,8 +83,7 @@ def fetch_tech_trends():
     except Exception:
         trends = [
             {"title": "デスク環境のエルゴノミクス投資と生産性ROIの相関分析", "link": "#simulator"},
-            {"title": "USB-C単一ケーブル化によるワークスペース構築ベストプラクティス", "link": "#ranking"},
-            {"title": "眼精疲労とタイピング負荷を下げる最新ハードウェア選定基準", "link": "#ranking"}
+            {"title": "USB-C単一ケーブル化によるワークスペース構築ベストプラクティス", "link": "#ranking"}
         ]
     return trends
 
@@ -86,6 +135,7 @@ def main():
     enriched_items.sort(key=lambda x: x["score"], reverse=True)
     trends = fetch_tech_trends()
 
+    # JSON-LD 構造化データ
     json_ld = {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -250,35 +300,17 @@ def main():
     with open(os.path.join(docs_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(sitemap_xml)
 
-    # IFTTT準拠の厳格なXMLエスケープ処理
-    rss_title = html.escape(meta['title'])
-    rss_desc = html.escape(meta['description'])
-    rss_items = ""
-    for it in enriched_items[:3]:
-        it_title = html.escape(f"【ROIスコア {it['score']}点】{it['name']}（1日実質{it['daily_cost']}円）")
-        it_desc = html.escape(f"{it['pros']}（時短目安: +{it['time_saved_min_per_day']}分/日）")
-        rss_items += f"""
-    <item>
-      <title>{it_title}</title>
-      <link>{meta['base_url']}/#ranking</link>
-      <guid isPermaLink="false">{it['id']}-{TODAY_STR}</guid>
-      <description>{it_desc}</description>
-      <pubDate>{NOW.strftime('%a, %d %b %Y %H:%M:%S +0900')}</pubDate>
-    </item>"""
+    # Blueskyへの直接自動投稿を実行
+    top_item = enriched_items[0]
+    bsky_text = f"【本日自動解析】作業時短×コスパROI第1位は『{top_item['name']}』！1日わずか{top_item['daily_cost']}円で毎月{top_item['monthly_net_benefit']:,}円相当の時短効果。"
+    post_to_bluesky(
+        os.environ.get("BLUESKY_HANDLE"),
+        os.environ.get("BLUESKY_APP_PASSWORD"),
+        bsky_text,
+        f"{meta['base_url']}/#ranking"
+    )
 
-    rss_xml = f"""<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
-  <channel>
-    <title>{rss_title}</title>
-    <link>{meta['base_url']}/</link>
-    <description>{rss_desc}</description>
-    <lastBuildDate>{NOW.strftime('%a, %d %b %Y %H:%M:%S +0900')}</lastBuildDate>{rss_items}
-  </channel>
-</rss>"""
-    with open(os.path.join(docs_dir, "feed.xml"), "w", encoding="utf-8") as f:
-        f.write(rss_xml)
-
-    print(f"[SUCCESS] Generated strictly compliant XML feed ({TODAY_STR})")
+    print(f"[SUCCESS] Built portal & executed auto-post pipeline ({TODAY_STR})")
 
 if __name__ == "__main__":
     main()
