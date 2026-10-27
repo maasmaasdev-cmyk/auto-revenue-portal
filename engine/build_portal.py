@@ -209,6 +209,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="Q4NkwPq-DlcppcV2__59GciUvaqFsWTLVnMdIQ42jm8" />
     <title>{meta['title']} 【{TODAY_JP}自動更新】</title>
     <meta name="description" content="{meta['description']}">
     <script src="https://cdn.tailwindcss.com"></script>
