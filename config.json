@@ -1,0 +1,96 @@
+{
+  "site_meta": {
+    "title": "TechSpec & ROI Lab | ガジェット・作業環境コスパ自動解析ポータル",
+    "description": "毎日自動更新。公的データ・トレンド指数・スペック比から算出するガジェット＆デスク環境ROI（費用対効果）シミュレーター＆ランキング。",
+    "base_url": "https://maasmaasdev-cmyk.github.io/auto-revenue-portal",
+    "author": "TechSpec Automated Analyst"
+  },
+  "monetization": {
+    "amazon_associate_tag": "YOUR_AMAZON_TAG-22",
+    "rakuten_affiliate_id": "58dd353b.cd774201.58dd353c.b9b94eb3",
+    "a8_banner_html": "<!-- ここにA8.net等の自由テキスト広告タグを貼り付け可能 -->",
+    "adsense_client_id": ""
+  },
+  "items_database": [
+    {
+      "id": "ergo-mouse-trackball",
+      "category": "入力デバイス",
+      "name": "ハイエンド親指トラックボールマウス Pro",
+      "search_keyword": "ロジクール トラックボール MX ERGO S",
+      "estimated_price": 17800,
+      "lifespan_months": 48,
+      "time_saved_min_per_day": 15,
+      "specs": {
+        "接続": "Bluetooth / Logi Bolt",
+        "傾斜角": "0° / 20°調整",
+        "充電": "USB-C急速"
+      },
+      "pros": "手首の回内筋負荷を約20%軽減し、マルチディスプレイ移動を高速化",
+      "target_user": "1日4時間以上PC作業を行うエンジニア・デスクワーカー"
+    },
+    {
+      "id": "4k-usb-c-monitor-27",
+      "category": "ディスプレイ",
+      "name": "27インチ 4K IPS USB-C給電モニター (90W PD対応)",
+      "search_keyword": "Dell 27インチ 4K モニター USB-C",
+      "estimated_price": 46800,
+      "lifespan_months": 60,
+      "time_saved_min_per_day": 28,
+      "specs": {
+        "解像度": "3840x2160 (4K)",
+        "給電": "USB-C 90W",
+        "パネル": "IPS非光沢"
+      },
+      "pros": "ケーブル1本で映像出力とPC給電を統合、ウィンドウ切替ロスを劇的削減",
+      "target_user": "ノートPC単体で作業しており画面切り替え頻度が高い方"
+    },
+    {
+      "id": "Split-keyboard-mech",
+      "category": "入力デバイス",
+      "name": "静電容量無接点 / ロープロファイル高速キーボード",
+      "search_keyword": "REALFORCE RC1 HHKB Studio",
+      "estimated_price": 35800,
+      "lifespan_months": 72,
+      "time_saved_min_per_day": 22,
+      "specs": {
+        "スイッチ": "静電容量無接点 / 高耐久",
+        "重量": "超軽量コンパクト",
+        "接続": "マルチペアリング4台"
+      },
+      "pros": "タイピング疲労と誤입력を極小化し、長文作成・コーディング速度を向上",
+      "target_user": "タイピング量が1日5,000打鍵を超えるクリエイター・執筆者"
+    },
+    {
+      "id": "gan-charger-100w",
+      "category": "電源・モバイル",
+      "name": "GaN (窒化ガリウム) 100W 3ポート超小型急速充電器",
+      "search_keyword": "Anker Prime Wall Charger 100W",
+      "estimated_price": 9990,
+      "lifespan_months": 36,
+      "time_saved_min_per_day": 10,
+      "specs": {
+        "最大出力": "100W",
+        "ポート": "USB-C x2 + USB-A x1",
+        "素子": "次世代GaN"
+      },
+      "pros": "ノートPCとスマホのACアダプタを1個に集約し、外出時の荷物を300g軽量化",
+      "target_user": "外出先や複数部屋でPC・スマホを同時充電するハイブリッドワーカー"
+    },
+    {
+      "id": "task-light-screenbar",
+      "category": "デスク環境",
+      "name": "モニター掛け式 自動調光デスクライト (非対称光学設計)",
+      "search_keyword": "BenQ ScreenBar Pro モニターライト",
+      "estimated_price": 19800,
+      "lifespan_months": 60,
+      "time_saved_min_per_day": 12,
+      "specs": {
+        "照度": "中央1000lux以上",
+        "センサー": "超音波自動点灯・自動調光",
+        "給電": "USB-C"
+      },
+      "pros": "画面への映り込みゼロで手元のみを照射し、夜間の眼精疲労を大幅に緩和",
+      "target_user": "夜間作業が多く、デスク上のスタンドライト設置スペースを節約したい方"
+    }
+  ]
+}
